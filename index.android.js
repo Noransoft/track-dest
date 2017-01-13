@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import MapView from 'react-native-maps';
 import {
   AppRegistry,
   StyleSheet,
@@ -17,37 +18,34 @@ export default class trackDest extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to Track Dest!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
+        <Text style={styles.welcome}>
+        This is a test
         </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <MapView style={styles.map} initialRegion={{
+            latitude: 19.0760,
+            longitude: 72.8777,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+        }}
+        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        height: 400,
+        width: 400,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+         },
 });
 
 AppRegistry.registerComponent('trackDest', () => trackDest);
