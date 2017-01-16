@@ -14,25 +14,28 @@
 } from 'react-native';
 
 export default class trackDest extends Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
+      region: {
         latitude: 37.78825,
         longitude: -122.4324,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
-    }
-  },
+      },
+    };
+  }
 
   onRegionChange(region) {
-    this.setState({ region });
-  },
+    console.log(" - about to set state to : " + JSON.stringify(region));
+    this.setState({ region })
+  }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log("Current position is " + JSON.stringify(position))
 
-        const region = 
         this.onRegionChange({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -41,11 +44,12 @@ export default class trackDest extends Component {
         });
       },
 
-        (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      (error) => console.log(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 10000, maximumAge: 1000}
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
+      console.log("Found this location " + JSON.stringify(position));
       this.onRegionChange({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
@@ -53,7 +57,7 @@ export default class trackDest extends Component {
         longitudeDelta: 0.1
       });
     });
-  },
+  }
 
   render() {
     return (
@@ -66,12 +70,12 @@ export default class trackDest extends Component {
         </Text>
         <MapView
           style={styles.map}
-          region={this.state}
+          region={this.state.region}
           onRegionChange={this.onRegionChange}/>
-        </View>
-      );
+      </View>
+    );
   }
-},
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-  },
+  }
 });
 
 AppRegistry.registerComponent('trackDest', () => trackDest);
